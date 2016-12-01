@@ -1,0 +1,16 @@
+{
+    "name": "JET-microservice-frontend",
+    "version": "0.0.0",
+    "description": "JET Microservices Hackathon Frontend",
+    "author": "ed.shnekendorf@oracle.com",
+    "scripts": {
+        "prepublish": "zip -r target/jet-quickstart-client-dist.zip node_modules doc_root manifest.json *.js"
+    },
+    "dependencies": {
+        "body-parser": "^1.15.1",
+        "express": "^4.13.4"
+    },
+    "engines": {
+        "node": ">=0.12.0"
+    }
+}

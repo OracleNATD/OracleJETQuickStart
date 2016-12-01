@@ -1,0 +1,47 @@
+<h1>Performance Content</h1>
+
+<div id="form-container" class="oj-form">
+    <form id="form1">
+        <div class="demo-grid-sizes demo-grid-display">
+            <div class="oj-row">
+                <div class="oj-sm-12 oj-md-6 oj-col">
+                    <label for="dataSetSelect">Data Set </label>
+                    <select id="dataSetSelect" data-bind="ojComponent: {component: 'ojSelect',
+                                                    options: availableDataSets,
+                                                    value: dataSetVal,
+                                                    optionChange: optionChangedHandler,
+                                                    rootAttributes: {style:'max-width:20em'}}">
+                    </select>
+                </div>
+                <div class="oj-sm-12 oj-md-6 oj-col">
+                    <label for="basicSelect">Graph Type </label>
+                    <select id="basicSelect" data-bind="ojComponent: {component: 'ojSelect',
+                                                    value: graphVal,
+                                                    rootAttributes: {style:'max-width:20em'}}">
+                        <option value="line">Line</option>
+                        <option value="bar">Bar</option>
+                        <option value="area">Area</option>
+                        <option value="combo">Combination</option>
+                        <option value="lineWithArea">Line with Area</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<p/>
+<p/>
+
+<div id="barChart" data-bind="ojComponent: {
+            component: 'ojChart',
+            type: graphVal()[0],
+            orientation: orientationValue,
+            stack: stackValue,
+            series: barSeriesValue,
+            groups: barGroupsValue,
+            animationOnDisplay: 'auto',
+            animationOnDataChange: 'auto',
+            hoverBehavior: 'dim'
+        }" style="max-width:500px;width:100%;height:350px;">
+</div>
