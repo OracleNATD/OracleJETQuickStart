@@ -43,6 +43,19 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable'],
             console.log(symbol);
             var url = root + uri + symbol;
 
+			$.getJSON(url).then(function(records){
+				               ko.utils.arrayForEach(records, function (value) {
+                    console.log(value.valueOf());
+                    // Fill data ko.observableArray with results
+                    self.data.push({
+                        symbol: value.t,
+                        exchange: value.e,
+                        price: value.l,
+                        time: value.lt
+                    });
+                });
+			})
+/* 			
             $.ajax({
                 url: url,
                 method: 'GET',
@@ -60,6 +73,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable'],
                     });
                 });
             });
+ */        
         };
 
         self.ticker.subscribe(function (newValue) {
