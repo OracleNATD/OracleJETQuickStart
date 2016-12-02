@@ -2,46 +2,44 @@
  * Copyright (c) 2014, 2016, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  */
+'use strict';
+
 /**
  * Example of Require.js boostrap javascript
  */
-requirejs.config({
+
+requirejs.config(
+{
+  baseUrl: 'js',
+
   // Path mappings for the logical module names
-  paths: 
- //injector:mainReleasePaths
+  paths:
+  //injector:mainReleasePaths
   {
-    'knockout': 'libs/knockout/knockout-3.4.0',
-    'jquery': 'libs/jquery/jquery-2.1.3.min',
-    'jqueryui-amd': 'libs/jquery/jqueryui-amd-1.11.4.min',
-    'promise': 'libs/es6-promise/promise-1.0.0.min',
-    'hammerjs': 'libs/hammer/hammer-2.0.4.min',
-    'ojdnd': 'libs/dnd-polyfill/dnd-polyfill-1.0.0.min',
-    'ojs': 'libs/oj/v2.0.0/debug',
-    'ojL10n': 'libs/oj/v2.0.0/ojL10n',
-    'ojtranslations': 'libs/oj/v2.0.0/resources',
-    'signals': 'libs/js-signals/signals.min',
-    'text': 'libs/require/text'
+    'knockout': 'libs/knockout/knockout-3.4.0.debug',
+    'jquery': 'libs/jquery/jquery-3.1.0',
+    'jqueryui-amd': 'libs/jquery/jqueryui-amd-1.12.0',
+    'promise': 'libs/es6-promise/es6-promise',
+    'hammerjs': 'libs/hammer/hammer-2.0.8',
+    'ojdnd': 'libs/dnd-polyfill/dnd-polyfill-1.0.0',
+    'ojs': 'libs/oj/v2.2.0/debug',
+    'ojL10n': 'libs/oj/v2.2.0/ojL10n',
+    'ojtranslations': 'libs/oj/v2.2.0/resources',
+    'text': 'libs/require/text',
+    'signals': 'libs/js-signals/signals'
   }
   //endinjector
   ,
   // Shim configurations for modules that do not expose AMD
-  shim: {
-    'jquery': {
+  shim:
+  {
+    'jquery':
+    {
       exports: ['jQuery', '$']
     }
-  },
-  // This section configures the i18n plugin. It is merging the Oracle JET built-in translation
-  // resources with a custom translation file.
-  // Any resource file added, must be placed under a directory named "nls". You can use a path mapping or you can define
-  // a path that is relative to the location of this main.js file.
-  config: {
-    ojL10n: {
-      merge: {
-        //'ojtranslations/nls/ojtranslations': 'resources/nls/menu'
-      }
-    }
   }
-});
+}
+);
 
 /**
  * A top-level require call executed by the Application.
@@ -49,69 +47,33 @@ requirejs.config({
  * by the modules themselves), we are listing them explicitly to get the references to the 'oj' and 'ko'
  * objects in the callback
  */
-require(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojrouter',
-  'ojs/ojmodule', 'ojs/ojoffcanvas', 'ojs/ojnavigationlist', 'ojs/ojarraytabledatasource'],
-  function (oj, ko, $) { // this callback gets executed when all required modules are loaded
-    var router = oj.Router.rootInstance;
-    router.configure({
-      'home': {label: 'Home', isDefault: true},
-      'people': {label: 'People'},
-      'library': {label: 'Library'},
-      'graphics': {label: 'Graphics'},
-      'performance': {label: 'Performance'}
+require(['ojs/ojcore', 'knockout', 'appController', 'ojs/ojknockout',
+  'ojs/ojmodule', 'ojs/ojrouter', 'ojs/ojnavigationlist', 'ojs/ojbutton', 'ojs/ojtoolbar'],
+  function (oj, ko, app) { // this callback gets executed when all required modules are loaded
+
+    $(function() {
+
+      function init() {
+        oj.Router.sync().then(
+          function () {
+            // Bind your ViewModel for the content of the whole page body.
+            ko.applyBindings(app, document.getElementById('globalBody'));
+          },
+          function (error) {
+            oj.Logger.error('Error in root start: ' + error.message);
+          }
+        );
+      }
+
+      // If running in a hybrid (e.g. Cordova) environment, we need to wait for the deviceready 
+      // event before executing any code that might interact with Cordova APIs or plugins.
+      if ($(document.body).hasClass('oj-hybrid')) {
+        document.addEventListener("deviceready", init);
+      } else {
+        init();
+      }
+
     });
 
-    function RootViewModel() {
-      var self = this;
-      self.router = router;
-
-      // Shared navigation data and callbacks for nav bar (medium+ screens) and nav list (small screens)
-      var navData = [
-        {name: 'Home', id: 'home',
-          iconClass: 'demo-home-icon-24 demo-icon-font-24 oj-navigationlist-item-icon'},
-        {name: 'People', id: 'people',
-          iconClass: 'demo-education-icon-24 demo-icon-font-24 oj-navigationlist-item-icon'},
-        {name: 'Library', id: 'library',
-          iconClass: 'demo-library-icon-24 demo-icon-font-24 oj-navigationlist-item-icon'},
-        {name: 'Graphics', id: 'graphics',
-          iconClass: 'demo-palette-icon-24  demo-icon-font-24 oj-navigationlist-item-icon'},
-        {name: 'Performance', id: 'performance',
-          iconClass: 'demo-grid-icon-16 demo-icon-font-24 oj-navigationlist-item-icon'}
-      ];
-      self.navDataSource = new oj.ArrayTableDataSource(navData, {idAttribute: 'id'});
-      var smQuery = oj.ResponsiveUtils.getFrameworkQuery(oj.ResponsiveUtils.FRAMEWORK_QUERY_KEY.SM_ONLY);
-      self.smScreen = oj.ResponsiveKnockoutUtils.createMediaQueryObservable(smQuery);
-      self.navChange = function(event, ui) {
-        if (ui.option === 'selection' && ui.value !== self.router.stateId()) {
-          // Only toggle navigation drawer when it's shown on small screens
-          if (self.smScreen())
-            self.toggleDrawer();
-          self.router.go(ui.value);
-        }
-      };
-      self.drawerParams = {
-        displayMode: 'push',
-        selector: '#offcanvas',
-      };
-      // Called by navigation drawer toggle button and after selection of nav drawer item
-      self.toggleDrawer = function() {
-        return oj.OffcanvasUtils.toggle(self.drawerParams);
-      };
-      // Close the drawer for medium and up screen sizes
-      var mdQuery = oj.ResponsiveUtils.getFrameworkQuery(oj.ResponsiveUtils.FRAMEWORK_QUERY_KEY.MD_UP);
-      self.mdScreen = oj.ResponsiveKnockoutUtils.createMediaQueryObservable(mdQuery);
-      self.mdScreen.subscribe(function() {oj.OffcanvasUtils.close(self.drawerParams);});
-    }
-
-    oj.Router.defaults['urlAdapter'] = new oj.Router.urlParamAdapter();
-    oj.Router.sync().then(
-      function () {
-        // bind your ViewModel for the content of the whole page body.
-        ko.applyBindings(new RootViewModel(), document.getElementById('globalBody'));
-      },
-      function (error) {
-        oj.Logger.error('Error in root start: ' + error.message);
-      }
-    );
   }
 );

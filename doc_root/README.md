@@ -1,4 +1,4 @@
-# Oracle JET version 2.0.0
+# Oracle JET version 2.2.0
 
 ## About Oracle JET
 Oracle JET is targeted at intermediate to advanced JavaScript developers working on client-side applications. It's a collection of open source JavaScript libraries along with a set of Oracle contributed JavaScript libraries that make it as simple and efficient as possible to build applications that consume and interact with Oracle products and services, especially Oracle Cloud services.
@@ -22,7 +22,7 @@ Oracle JET is a modular toolkit allowing developers to use as much or as little 
 ## Examples
 Here is a list of places to see Oracle JET in action:
 * [Oracle JET website](http://oraclejet.org)
-* [Oracle JET Cookbook](http://www.oracle.com/webfolder/technetwork/jet/uiComponents-formControls.html) - Every component with live code demos
+* [Oracle JET Cookbook](http://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html) - Every component with live code demos
 * [Sample applications and Tutorials](http://www.oracle.com/webfolder/technetwork/jet/globalExamples.html)
 
 
@@ -30,16 +30,15 @@ Here is a list of places to see Oracle JET in action:
 Oracle JET provides a Yeoman generator to help scaffold up your applications.  To install and build a blank app, type:
 
 ```
-npm install -g yo
-npm install -g grunt
+npm install -g yo grunt bower grunt-cli
 npm install -g generator-oraclejet
 
 yo oraclejet <app name>
 ```
-See the [Oracle JET Developer Guide](http://docs.oracle.com/middleware/jet200/jet/) for complete installation details, including prerequisites.
+See the [Oracle JET Developer Guide](http://docs.oracle.com/middleware/jet220/jet/) for complete installation details, including prerequisites.
 
-## [Documentation](http://docs.oracle.com/middleware/jet200/jet/)
-Oracle JET comes with a full [Developers Guide](http://docs.oracle.com/middleware/jet200/jet/) to help with Getting Started and many common issues.
+## [Documentation](http://docs.oracle.com/middleware/jet220/jet/)
+Oracle JET comes with a full [Developers Guide](http://docs.oracle.com/middleware/jet220/jet/) to help with Getting Started and many common issues.
 
 ## [Contributing](https://github.com/oracle/oraclejet/tree/master/CONTRIBUTING.md)
 Oracle JET is an open source project. Pull Requests are currently not being accepted. See 
