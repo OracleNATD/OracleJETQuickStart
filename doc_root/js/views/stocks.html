@@ -6,11 +6,12 @@
 <h1>Stock Quotes</h1>
 <div id="div1">
 
-  <label for="text-input">Enter 1 or more ticker symbols</label>
+  <label for="text-input">Enter stock ticker symbols</label>
   <input id="text-input" 
          type="text"
          data-bind="ojComponent: {component: 'ojInputText', 
-                                  value: ticker}"/>
+                                  value: ticker,
+								  optionChange: changeHandler}"/>
    
   <br/><br/>
   

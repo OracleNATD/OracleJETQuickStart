@@ -5,7 +5,7 @@
 /*
  * Your dashboard ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable'],
+define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarraytabledatasource'],
  function(oj, ko, $) {
   
     function DashboardViewModel() {
@@ -28,7 +28,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable'],
        * the promise is resolved
        */
 	   
-	          var uri = 'stocks?ticker='
+	    var uri = 'stocks?ticker='
 
         self.ticker = ko.observable("");
         self.price = ko.observable("");
@@ -44,48 +44,33 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable'],
             var url = root + uri + symbol;
 
 			$.getJSON(url).then(function(records){
-				               ko.utils.arrayForEach(records, function (value) {
+				var tempArray = [];
+//				ko.utils.arrayForEach(records, function (value) {
+				records.forEach(function(value){
                     console.log(value.valueOf());
                     // Fill data ko.observableArray with results
-                    self.data.push({
+					
+                    tempArray.push({
                         symbol: value.t,
                         exchange: value.e,
                         price: value.l,
                         time: value.lt
                     });
                 });
-			})
-/* 			
-            $.ajax({
-                url: url,
-                method: 'GET',
-                dataType: "json"
-            }).success(function (records) {
-
-                ko.utils.arrayForEach(records, function (value) {
-                    console.log(value.valueOf());
-                    // Fill data ko.observableArray with results
-                    self.data.push({
-                        symbol: value.t,
-                        exchange: value.e,
-                        price: value.l,
-                        time: value.lt
-                    });
-                });
-            });
- */        
+				self.data(tempArray);
+				$('#table').ojTable('refresh');
+			})       
         };
 
-        self.ticker.subscribe(function (newValue) {
-            console.log(newValue)
-            self.fetch();
-        });
-
+		self.changeHandler = function(event, data){
+			if(data.option === "value"){
+				console.log(data.value)
+				self.fetch();				
+			}
+		}
+		
         self.stocks = new oj.ArrayTableDataSource(self.data, {idAttribute: 'symbol'});
         //this.price = symbol;
-	   
-	   
-	   
 	   
       self.handleActivated = function(info) {
         // Implement if needed
