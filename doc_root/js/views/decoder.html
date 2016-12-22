@@ -9,7 +9,8 @@
         data: codes,
         columns: [
                {headerText: 'Code', field: 'code', sortable: 'enabled'},
-               {headerText: 'Decode', field: 'decode', sortable: 'enabled'}
+               {headerText: 'Decode', field: 'decode', sortable: 'enabled', 
+               renderer: cell_wrap}
                ],
         rootAttributes: {'style':'width: 100%; height:100%;'},
         scrollPolicy: 'loadMoreOnScroll',

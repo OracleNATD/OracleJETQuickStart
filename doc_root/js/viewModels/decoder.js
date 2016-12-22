@@ -36,14 +36,14 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable', 'o
 
                 // Create empty array for the results...
                 self.data = ko.observableArray([]);
-                
+
                 console.log("Before fetch...");
 
                 self.fetch = function () {
 
                     // Get codes and decodes...
                     var url = root + uri;
-                    console.log ("URL = " + url);
+                    console.log("URL = " + url);
 
                     $.getJSON(url).then(function (records) {
                         var tempArray = [];
@@ -72,6 +72,18 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable', 'o
 
                 self.handleActivated = function (info) {
                     // Implement if needed
+                };
+
+                // cell renderer function
+                // Directly append HTML to the cell passed in
+                // via context.parentElement
+                self.cell_wrap = function (context)
+                {
+                    console.log("Entered cell_wrap...");
+                    var tdDiv = $(document.createElement('div'));
+                    tdDiv.attr('style', 'word-break:break-all');
+                    tdDiv.text(context.row.decode);
+                    $(context.cellContext.parentElement).append(tdDiv);
                 };
 
                 /**
