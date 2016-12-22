@@ -2,5 +2,6 @@
     "runtime": {
         "majorVersion": "0.12"
     },
-    "command": "node server.js verbose=true"
+    "command": "node server.js verbose=true",
+    "startupTime" : "120"
 }

@@ -1,0 +1,19 @@
+<!--
+ Copyright (c) 2014, 2016, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+ -->
+<div class="oj-hybrid-padding">
+<h1>Pat's Secret AppDev Terminology Decoder Ring</h1>
+
+<table id="table" summary="Tweet List" data-bind="ojComponent:{component:'ojTable',
+        data: codes,
+        columns: [
+               {headerText: 'Code', field: 'code', sortable: 'enabled'},
+               {headerText: 'Decode', field: 'decode', sortable: 'enabled'}
+               ],
+        rootAttributes: {'style':'width: 100%; height:100%;'},
+        scrollPolicy: 'loadMoreOnScroll',
+        scrollPolicyOptions: {'fetchSize': 10}}">
+</table>
+
+</div>
