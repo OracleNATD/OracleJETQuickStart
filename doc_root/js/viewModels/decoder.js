@@ -81,9 +81,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable', 'o
                 {
                     console.log("Entered cell_wrap...");
                     var tdDiv = $(document.createElement('div'));
-                    tdDiv.attr('style', 'word-break:break-all');
+                    //tdDiv.attr('style', 'word-break');
                     tdDiv.text(context.row.decode);
                     $(context.cellContext.parentElement).append(tdDiv);
+                    $(context.cellContext.parentElement).addClass('wordwrap');
                 };
 
                 /**
