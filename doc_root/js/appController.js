@@ -20,7 +20,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
        // Router setup
        self.router = oj.Router.rootInstance;
        self.router.configure({
-         'decoder': {label: 'AppDev Decoder', isDefault: true},
+         'home': {label: 'Home', isDefault: true},           
+         'decoder': {label: 'AppDev Decoder'},
          'stocks': {label: 'Stocks'},
          'incidents': {label: 'Incidents'},
          'tweets': {label: 'Social'},
@@ -30,6 +31,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
 
       // Navigation setup
       var navData = [
+      {name: 'Home', id: 'home',
+       iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-home-icon-24'},
       {name: 'AppDev Decoder', id: 'decoder',
        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-education-icon-24'},
       {name: 'Stocks', id: 'stocks',
