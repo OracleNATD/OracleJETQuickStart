@@ -59,9 +59,6 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable', 'o
                 });
                 self.results(jsonString);
             });
-
- 
-        
         };
         
 
