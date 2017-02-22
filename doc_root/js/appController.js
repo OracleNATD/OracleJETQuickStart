@@ -22,6 +22,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
        self.router.configure({
          'home': {label: 'Home', isDefault: true},           
          'decoder': {label: 'AppDev Decoder'},
+         'ecommerce': {label: 'eCommerce'},
          'stocks': {label: 'Stocks'},
          'incidents': {label: 'Incidents'},
          'tweets': {label: 'Social'},
@@ -35,6 +36,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-home-icon-24'},
       {name: 'AppDev Decoder', id: 'decoder',
        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-education-icon-24'},
+      {name: 'eCommerce', id: 'ecommerce',
+       iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-palette-icon-24'},
       {name: 'Stocks', id: 'stocks',
        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-chart-icon-24'},
       {name: 'Incidents', id: 'incidents',

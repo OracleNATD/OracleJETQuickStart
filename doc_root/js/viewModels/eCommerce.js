@@ -10,7 +10,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable', 'o
   
     function DashboardViewModel() {
 		
-      var root = 'https://wildflystocktickerservice-gse00001975.apaas.em2.oraclecloud.com/ticker-tracker/api/'
+      var root = 'http://153.92.39.42:8001/lm/bealls/bySearchTerm/'
 
       var self = this;
       // Below are a subset of the ViewModel methods invoked by the ojModule binding
@@ -28,47 +28,53 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable', 'o
        * the promise is resolved
        */
 	   
-	    var uri = 'stocks?ticker='
-
-        self.ticker = ko.observable("");
-        self.price = ko.observable("");
-
-        // Create empty array for the results...
-        self.data = ko.observableArray([]);
+        self.searchTerm = ko.observable("");
+        
+        // Create empty string for the results...
+        self.results = ko.observable("");
 
         self.fetch = function () {
 
-            // Get ticker and build request URL...
-            var symbol = self.ticker().toString();
-            console.log(symbol);
-            var url = root + uri + symbol;
+            // Get search terms and build request URL...
+            var searchTerm = self.searchTerm().toString();
+            console.log("searchTerm = " + searchTerm);
+            var url = root + searchTerm;
+            console.log("URL = " + url);
 
-	    $.getJSON(url).then(function(records){
-               var tempArray = [];
-                records.forEach(function(value){
-                    console.log(value.valueOf());
+            $.getJSON(url).then(function(records){
+                var tempArray = [];
+                var json = records.valueOf();
+                var jsonString = JSON.stringify(json)
+                console.log(JSON);
+                console.log(jsonString);
+                
+                // I'm not using this data here yet, but leaving the code for 
+                // future reference...
+                var items = [];
+                $.each( records, function (key, value) {
+                    console.log("Key = " + key + ", Value = " + value);
                     tempArray.push({
-                        symbol: value.t,
-                        exchange: value.e,
-                        price: value.l,
-                        time: value.lt
+                        
                     });
                 });
-                self.data(tempArray);
-                $('#table').ojTable('refresh');
-            })       
-        };
+                self.results(jsonString);
+            });
 
-		self.changeHandler = function(event, data){
-			if(data.option === "value"){
-				console.log(data.value)
-				self.fetch();				
-			}
-		}
-		
-        self.stocks = new oj.ArrayTableDataSource(self.data, {idAttribute: 'symbol'});
-        //this.price = symbol;
-	   
+ 
+        
+        };
+        
+
+      self.changeHandler = function(event, results){
+              if(results.option === "value"){
+                      console.log(results.value)
+                      self.fetch();				
+              };
+      };     
+      
+      self.stocks = new oj.DataSource(self.results);
+        
+        
       self.handleActivated = function(info) {
         // Implement if needed
       };

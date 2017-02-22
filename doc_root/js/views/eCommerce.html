@@ -1,0 +1,21 @@
+<!--
+ Copyright (c) 2014, 2016, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+ -->
+<div class="oj-hybrid-padding">
+<h1>Welcome to the Oracle JET Store!</h1>
+<div id="div1">
+
+  <label for="text-input">Enter search terms</label>
+  <input id="text-input" 
+         type="text"
+         data-bind="ojComponent: {component: 'ojInputText', 
+                                  value: searchTerm,
+				  optionChange: changeHandler}"/>
+  <br/><br/>
+</div>
+
+<span class="oj-label">Search Results:</span>
+<span data-bind="text: results"></span>
+
+</div>
