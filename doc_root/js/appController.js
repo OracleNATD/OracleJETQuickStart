@@ -37,7 +37,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
       {name: 'AppDev Decoder', id: 'decoder',
        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-education-icon-24'},
       {name: 'eCommerce', id: 'ecommerce',
-       iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-palette-icon-24'},
+       iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-catalog-icon-24'},
       {name: 'Stocks', id: 'stocks',
        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-chart-icon-24'},
       {name: 'Incidents', id: 'incidents',

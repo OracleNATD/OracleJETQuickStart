@@ -30,10 +30,21 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable', 'o
 	   
         self.searchTerm = ko.observable("");
         
-        // Create empty string for the results...
+        // Create empty strings for the results...
         self.results = ko.observable("");
-
+        self.recordCount = ko.observable("");
+        self.itemCategory = ko.observable("");
+        self.searchSuccess = ko.observable("");
+        self.loading = ko.observable(false);
+        
         self.fetch = function () {
+
+            // Clear fields before next query...
+            self.recordCount("");
+            self.itemCategory("");
+            self.searchSuccess("");
+            self.results("");
+            self.loading(true);
 
             // Get search terms and build request URL...
             var searchTerm = self.searchTerm().toString();
@@ -48,6 +59,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable', 'o
                 console.log(JSON);
                 console.log(jsonString);
                 
+                console.log("recordSetTotal = " + json.recordSetTotal);
+                console.log("resourceName = " + json.resouceName);
+                console.log("metaData.minMatch = " + json.metaData.minMatch);
+                
                 // I'm not using this data here yet, but leaving the code for 
                 // future reference...
                 var items = [];
@@ -57,21 +72,25 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable', 'o
                         
                     });
                 });
+                
+               var searchSuccess = (json.metaData.minMatch == '0' ? 'First Try!' : "If as first you don't succeed, try, try again. Then quit.");
+            
+                self.recordCount(json.recordSetTotal);
+                self.itemCategory(json.resourceName);
+                self.searchSuccess(searchSuccess);
                 self.results(jsonString);
+                self.loading(false);
             });
         };
         
 
       self.changeHandler = function(event, results){
               if(results.option === "value"){
-                      console.log(results.value)
+                      console.log(results.value);
                       self.fetch();				
               };
       };     
-      
-      self.stocks = new oj.DataSource(self.results);
-        
-        
+              
       self.handleActivated = function(info) {
         // Implement if needed
       };

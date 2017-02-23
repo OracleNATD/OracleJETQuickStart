@@ -15,7 +15,22 @@
   <br/><br/>
 </div>
 
-<span class="oj-label">Search Results:</span>
+<h3>Search Results</h3>
+<img data-bind="attr: { src: loading() ? 
+                                 'images/loader.gif' : 
+                                 ''}">   
+                                                            
+
+<span class="oj-label">Number of items found: </span>
+<span data-bind="text: recordCount"></span>
+<p></p>
+<span class="oj-label">Item Category: </span>
+<span data-bind="text: itemCategory"></span>
+<p></p>
+<span class="oj-label">Search Success:</span>
+<span data-bind="text: searchSuccess"></span>
+<p></p>
+<span class="oj-label">Raw Results:</span>
 <span data-bind="text: results"></span>
 
 </div>
