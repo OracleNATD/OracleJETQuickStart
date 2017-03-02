@@ -62,7 +62,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable', 'o
                         //},
                         success: function (data) {
                             console.log('success: ' + data);
-                            if (data == 'Unknown discipline') {
+                            if (data == 'Unknown discipline brian') {
                                 console.log('no results');
                                 self.data([]); // Clear the table
                                 self.message("Try another discipline...");
