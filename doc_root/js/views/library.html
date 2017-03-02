@@ -1,0 +1,50 @@
+<!--
+ Copyright (c) 2014, 2016, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+-->
+<div class="oj-hybrid-padding">
+    <h1>Text Books</h1>
+    <div id="div1">
+
+        <label for="text-input">Enter a discipline</label>
+        <input id="text-input" 
+               type="text"
+               data-bind="ojComponent: {component: 'ojInputText', 
+                                  value: discipline,
+                                  optionChange: changeHandler}"/>  <span data-bind="text: message"></span>
+
+        <br/><br/>
+    </div>
+
+    <table id="table" summary="Tweet List" data-bind="ojComponent:{component:'ojTable',
+        data: books,
+        columns: [
+               {headerText: 'Cover', field: 'coverImage', template: 'coverImage', sortable: 'disabled'},
+               {headerText: 'Title', field: 'title', sortable: 'enabled'},
+               {headerText: 'Authors', field: 'authors', sortable: 'enabled'},
+               {headerText: 'Publisher', field: 'publisher', sortable: 'enabled'}
+               ],
+        rootAttributes: {'style':'width: 100%; height:100%;'},
+        scrollPolicy: 'loadMoreOnScroll',
+        scrollPolicyOptions: {'fetchSize': 10}}">
+    </table>
+
+</div>
+
+<script type="text/html" id="coverImage">
+     <td>
+        <img alt="cover image" data-bind="attr: { src: coverImage }"   
+        width="48px" height="48px"/>     
+     </td>
+</script>
+
+
+
+<script type="text/html" id="coverImageX">
+     <td>
+       <div data-bind="ojComponent: {component: 'ojRatingGauge', value:Rating, readOnly: true}" 
+             style="width:60px;height:15px;">
+        </div>
+     </td>
+</script>
+
