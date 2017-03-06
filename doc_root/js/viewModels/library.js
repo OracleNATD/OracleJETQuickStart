@@ -5,14 +5,19 @@
 /*
  * Your dashboard ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarraytabledatasource'],
+define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojcheckboxset', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarraytabledatasource'],
         function (oj, ko, $) {
 
             function DashboardViewModel() {
-
-                var root = 'http://153.92.39.42:8001/webassign/instructors/disciplines/';
-
+                
                 var self = this;
+                
+                var root = 'https://nodeapicontainer-gse00001975.apaas.em2.oraclecloud.com/instructional/instructors/disciplines/';
+                
+                // Switch to this URL to run through the API Platform (note, http content isn't allowed to be served in an https page). 
+                // To demo this, just run this application locally
+                //var root = 'http://153.92.39.42:8001/webassign/instructors/disciplines/';
+
                 // Below are a subset of the ViewModel methods invoked by the ojModule binding
                 // Please reference the ojModule jsDoc for additionaly available methods.
 

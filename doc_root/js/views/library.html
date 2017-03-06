@@ -4,9 +4,12 @@
 -->
 <div class="oj-hybrid-padding">
     <h1>Text Books</h1>
+    <div>This page is backed by a Node.js Express REST API.</div>
+    <p></p>
+
     <div id="div1">
 
-        <label for="text-input">Enter a discipline</label>
+        <label for="text-input">Enter a discipline (try Astronomy)</label>
         <input id="text-input" 
                type="text"
                data-bind="ojComponent: {component: 'ojInputText', 
@@ -32,19 +35,19 @@
 </div>
 
 <script type="text/html" id="coverImage">
-     <td>
+    <td>
         <img alt="cover image" data-bind="attr: { src: coverImage }"   
-        width="48px" height="48px"/>     
-     </td>
+             width="48px" height="48px"/>     
+    </td>
 </script>
 
 
 
 <script type="text/html" id="coverImageX">
-     <td>
-       <div data-bind="ojComponent: {component: 'ojRatingGauge', value:Rating, readOnly: true}" 
+    <td>
+        <div data-bind="ojComponent: {component: 'ojRatingGauge', value:Rating, readOnly: true}" 
              style="width:60px;height:15px;">
         </div>
-     </td>
+    </td>
 </script>
 
