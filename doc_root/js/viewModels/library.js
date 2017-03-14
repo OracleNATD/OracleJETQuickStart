@@ -66,15 +66,15 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojcheckboxset', 'ojs/ojinputtex
                         //    console.log(request);
                         //},
                         success: function (data) {
-                            console.log('success: ' + data);
-                            if (data == 'Unknown discipline') {
+                            console.log('success - recordsFound: ' + data.recordsFound);
+                            if (data.recordsFound == 0) {
                                 console.log('no results');
                                 self.data([]); // Clear the table
                                 self.message("Try another discipline...");
                             } else {
 
                                 var tempArray = [];
-                                data.forEach(function (value) {
+                                data.results.forEach(function (value) {
                                     console.log(value.valueOf());
                                     tempArray.push({
                                         title: value.title,
