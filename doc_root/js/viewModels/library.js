@@ -9,14 +9,17 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojcheckboxset', 'ojs/ojinputtex
         function (oj, ko, $) {
 
             function DashboardViewModel() {
-                
+
                 var self = this;
-                
+
                 var root = 'https://nodeapicontainer-gse00001975.apaas.em2.oraclecloud.com/instructional/instructors/disciplines/';
-                
+
                 // Switch to this URL to run through the API Platform (note, http content isn't allowed to be served in an https page). 
                 // To demo this, just run this application locally
                 //var root = 'http://153.92.39.42:8001/webassign/instructors/disciplines/';
+
+                // Switch to this URL to run through the API Platform on the GSE instance of Ravello for Oracle Code
+                var root = 'http://85.190.182.202:8001/library/'
 
                 // Below are a subset of the ViewModel methods invoked by the ojModule binding
                 // Please reference the ojModule jsDoc for additionaly available methods.
@@ -33,21 +36,24 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojcheckboxset', 'ojs/ojinputtex
                  * the promise is resolved
                  */
 
+                // Define observables...
                 self.discipline = ko.observable("");
-
-                // Create empty array for the results...
                 self.data = ko.observableArray([]);
-                
-                // Create observable for messages
                 self.message = ko.observable('');
+                self.loading = ko.observable(false);
 
                 self.fetch = function () {
+
+                    // Clear fields before next query...                    
+                    self.data([]);
+                    self.message("");
+                    self.loading(true);
 
                     // Get discipline and build request URL...
                     var discipline = self.discipline().toString();
                     console.log(discipline);
                     var url = root + discipline;
-                             
+
                     // Need to use $.ajax instead of $.json in order to set 
                     // header values required by APIPCS.
                     $.ajax({
@@ -59,7 +65,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojcheckboxset', 'ojs/ojinputtex
                         //},
                         type: 'GET',
                         dataType: 'json',
-                        
+
                         //beforeSend: function(request) {
                         //    console.log(request);
                         //    request.setRequestHeader("tenant-id", "2");
@@ -67,6 +73,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojcheckboxset', 'ojs/ojinputtex
                         //},
                         success: function (data) {
                             console.log('success - recordsFound: ' + data.recordsFound);
+                            console.log('searchTerm: ' + data.searchTerm);
+                            console.log('relaxed : ' + data.relaxed);
                             if (data.recordsFound == 0) {
                                 console.log('no results');
                                 self.data([]); // Clear the table
@@ -85,21 +93,31 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojcheckboxset', 'ojs/ojinputtex
                                 });
                                 self.data(tempArray);
                                 $('#table').ojTable('refresh');
-                                self.message("");
-                              
+
+
+                                if (data.relaxed == "true") {
+                                    self.message("Nothing was found matching your request, but try these on for size...");
+                                } else {
+                                    self.message("");
+                                }
+                                
+                                self.loading(false);
+
                             }
                         },
                         statusCode: {
-                          403: function() {
-                              console.log('403');
-                          }
+                            403: function () {
+                                console.log('403');
+                                self.loading(false);
+                            }
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             console.log('error:', jqXHR);
                             self.data([]); // Clear the table
-                            self.message("Slow Down Cowboy!");   
+                            self.message("Slow Down Cowboy!");
                             // Maybe I can't see these errors becaose of the CORS exception. However, the CORS exception only occurs when a policy violation occurs.
                             console.log('Request Status: ' + jqXHR.status + ' Status Text: ' + textStatus + ' Error Thrown: ' + errorThrown);
+                            self.loading(false);
                         }
                     });
                 };
@@ -112,7 +130,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojcheckboxset', 'ojs/ojinputtex
                 };
 
                 self.books = new oj.ArrayTableDataSource(self.data, {idAttribute: 'title'});
-                
+
                 self.handleActivated = function (info) {
                     // Implement if needed
                 };

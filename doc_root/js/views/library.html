@@ -19,6 +19,10 @@
         <br/><br/>
     </div>
 
+    <img data-bind="attr: { src: loading() ? 
+                                 'images/loader.gif' : 
+                                 'images/transparent-pixel.png'}">    
+
     <table id="table" summary="Tweet List" data-bind="ojComponent:{component:'ojTable',
         data: books,
         columns: [
