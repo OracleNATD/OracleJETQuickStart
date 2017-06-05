@@ -22,6 +22,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
        self.router.configure({
          'home': {label: 'Home', isDefault: true},           
          'decoder': {label: 'AppDev Decoder'},
+         'departments': {label: 'Departments'},
          'library': {label: 'Library'},
          'ecommerce': {label: 'eCommerce'},
          'stocks': {label: 'Stocks'},
@@ -32,11 +33,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
       oj.Router.defaults['urlAdapter'] = new oj.Router.urlParamAdapter();
 
       // Navigation setup
+      // Available Icon Fonts: http://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=iconfont&demo=iconfont
       var navData = [
       {name: 'Home', id: 'home',
        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-home-icon-24'},
       {name: 'AppDev Decoder', id: 'decoder',
        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-education-icon-24'},
+      {name: 'Departments', id: 'departments',
+       iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-people-icon-24'},
       {name: 'Library', id: 'library',
        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-library-icon-24'},
       {name: 'eCommerce', id: 'ecommerce',

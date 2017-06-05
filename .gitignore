@@ -5,3 +5,6 @@
 /node_modules/
 /nbproject/private/
 npm-debug.log
+..gitignore.un~
+.gitignore~
+

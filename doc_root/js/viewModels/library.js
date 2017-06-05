@@ -18,8 +18,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojcheckboxset', 'ojs/ojinputtex
                 // To demo this, just run this application locally
                 //var root = 'http://153.92.39.42:8001/webassign/instructors/disciplines/';
 
-                // Switch to this URL to run through the API Platform on the GSE instance of Ravello for Oracle Code
-                var root = 'http://85.190.182.202:8001/library/'
+                // Switch to this URL to run through the API Platform on the GSE instance of Ravello for Oracle Code using ICS
+                //var root = 'http://85.190.182.202:8001/library/'
+
+                // Switch to this URL to run through the API Platform on the GSE instance of Ravello for Oracle Code bypassing ICS
+                var root = 'http://85.190.182.202:8001/library2/'
 
                 // Below are a subset of the ViewModel methods invoked by the ojModule binding
                 // Please reference the ojModule jsDoc for additionaly available methods.
@@ -78,6 +81,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojcheckboxset', 'ojs/ojinputtex
                             if (data.recordsFound == 0) {
                                 console.log('no results');
                                 self.data([]); // Clear the table
+                                self.loading(false);
                                 self.message("Try another discipline...");
                             } else {
 
